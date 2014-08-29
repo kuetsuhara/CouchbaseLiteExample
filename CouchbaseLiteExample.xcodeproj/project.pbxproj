@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DA460011919D26D0097C002 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA460001919D26D0097C002 /* Comment.m */; };
+		1DA460051919DDF90097C002 /* SyncSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA460031919DDF90097C002 /* SyncSettingViewController.m */; };
 		1DEAA41C19137B1400290BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA41B19137B1400290BCB /* Foundation.framework */; };
 		1DEAA41E19137B1400290BCB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA41D19137B1400290BCB /* CoreGraphics.framework */; };
 		1DEAA42019137B1400290BCB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA41F19137B1400290BCB /* UIKit.framework */; };
@@ -21,6 +23,12 @@
 		1DEAA43D19137B1400290BCB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA41F19137B1400290BCB /* UIKit.framework */; };
 		1DEAA44519137B1400290BCB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DEAA44319137B1400290BCB /* InfoPlist.strings */; };
 		1DEAA44719137B1400290BCB /* CouchbaseLiteExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAA44619137B1400290BCB /* CouchbaseLiteExampleTests.m */; };
+		1DEAA45119137D0A00290BCB /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45019137D0A00290BCB /* CouchbaseLite.framework */; };
+		1DEAA45519137DEB00290BCB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45219137DEB00290BCB /* CFNetwork.framework */; };
+		1DEAA45619137DEB00290BCB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45319137DEB00290BCB /* Security.framework */; };
+		1DEAA45719137DEB00290BCB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45419137DEB00290BCB /* SystemConfiguration.framework */; };
+		1DEAA45A19137E0800290BCB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45819137E0800290BCB /* libsqlite3.dylib */; };
+		1DEAA45B19137E0800290BCB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEAA45919137E0800290BCB /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1DA45FFF1919D26D0097C002 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		1DA460001919D26D0097C002 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		1DA460021919DDF90097C002 /* SyncSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncSettingViewController.h; sourceTree = "<group>"; };
+		1DA460031919DDF90097C002 /* SyncSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncSettingViewController.m; sourceTree = "<group>"; };
 		1DEAA41819137B1400290BCB /* CouchbaseLiteExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchbaseLiteExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DEAA41B19137B1400290BCB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DEAA41D19137B1400290BCB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +65,12 @@
 		1DEAA44219137B1400290BCB /* CouchbaseLiteExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CouchbaseLiteExampleTests-Info.plist"; sourceTree = "<group>"; };
 		1DEAA44419137B1400290BCB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1DEAA44619137B1400290BCB /* CouchbaseLiteExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CouchbaseLiteExampleTests.m; sourceTree = "<group>"; };
+		1DEAA45019137D0A00290BCB /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
+		1DEAA45219137DEB00290BCB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1DEAA45319137DEB00290BCB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1DEAA45419137DEB00290BCB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1DEAA45819137E0800290BCB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		1DEAA45919137E0800290BCB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +78,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DEAA45A19137E0800290BCB /* libsqlite3.dylib in Frameworks */,
+				1DEAA45B19137E0800290BCB /* libz.dylib in Frameworks */,
+				1DEAA45519137DEB00290BCB /* CFNetwork.framework in Frameworks */,
+				1DEAA45619137DEB00290BCB /* Security.framework in Frameworks */,
+				1DEAA45719137DEB00290BCB /* SystemConfiguration.framework in Frameworks */,
 				1DEAA41E19137B1400290BCB /* CoreGraphics.framework in Frameworks */,
 				1DEAA42019137B1400290BCB /* UIKit.framework in Frameworks */,
+				1DEAA45119137D0A00290BCB /* CouchbaseLite.framework in Frameworks */,
 				1DEAA41C19137B1400290BCB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +125,12 @@
 		1DEAA41A19137B1400290BCB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DEAA45819137E0800290BCB /* libsqlite3.dylib */,
+				1DEAA45919137E0800290BCB /* libz.dylib */,
+				1DEAA45219137DEB00290BCB /* CFNetwork.framework */,
+				1DEAA45319137DEB00290BCB /* Security.framework */,
+				1DEAA45419137DEB00290BCB /* SystemConfiguration.framework */,
+				1DEAA45019137D0A00290BCB /* CouchbaseLite.framework */,
 				1DEAA41B19137B1400290BCB /* Foundation.framework */,
 				1DEAA41D19137B1400290BCB /* CoreGraphics.framework */,
 				1DEAA41F19137B1400290BCB /* UIKit.framework */,
@@ -119,6 +149,10 @@
 				1DEAA43119137B1400290BCB /* ViewController.m */,
 				1DEAA43319137B1400290BCB /* Images.xcassets */,
 				1DEAA42219137B1400290BCB /* Supporting Files */,
+				1DA45FFF1919D26D0097C002 /* Comment.h */,
+				1DA460001919D26D0097C002 /* Comment.m */,
+				1DA460021919DDF90097C002 /* SyncSettingViewController.h */,
+				1DA460031919DDF90097C002 /* SyncSettingViewController.m */,
 			);
 			path = CouchbaseLiteExample;
 			sourceTree = "<group>";
@@ -249,8 +283,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DA460051919DDF90097C002 /* SyncSettingViewController.m in Sources */,
 				1DEAA43219137B1400290BCB /* ViewController.m in Sources */,
 				1DEAA42C19137B1400290BCB /* AppDelegate.m in Sources */,
+				1DA460011919D26D0097C002 /* Comment.m in Sources */,
 				1DEAA42819137B1400290BCB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,9 +412,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CouchbaseLiteExample/CouchbaseLiteExample-Prefix.pch";
 				INFOPLIST_FILE = "CouchbaseLiteExample/CouchbaseLiteExample-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -389,9 +430,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CouchbaseLiteExample/CouchbaseLiteExample-Prefix.pch";
 				INFOPLIST_FILE = "CouchbaseLiteExample/CouchbaseLiteExample-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,6 +502,7 @@
 				1DEAA44C19137B1400290BCB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1DEAA44D19137B1400290BCB /* Build configuration list for PBXNativeTarget "CouchbaseLiteExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +511,7 @@
 				1DEAA44F19137B1400290BCB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

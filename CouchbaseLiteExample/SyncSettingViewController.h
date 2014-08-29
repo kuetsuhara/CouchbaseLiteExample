@@ -10,4 +10,9 @@
 
 @interface SyncSettingViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *IDTextField;
+@property (weak, nonatomic) IBOutlet UITextField *PassTextField;
+
+- (IBAction)doneButtonPushed:(id)sender;
+
 @end

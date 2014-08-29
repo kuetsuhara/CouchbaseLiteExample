@@ -10,4 +10,6 @@
 
 @implementation Comment
 
+@dynamic comment,createdAt,check;
+
 @end

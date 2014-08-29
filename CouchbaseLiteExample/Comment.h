@@ -10,4 +10,8 @@
 
 @interface Comment : CBLModel
 
+@property (copy) NSString *comment; // テキストフィールドの値
+@property (strong) NSDate *createdAt; // 今の日付
+@property BOOL check; // YES
+
 @end

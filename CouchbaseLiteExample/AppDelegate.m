@@ -7,11 +7,17 @@
 //
 
 #import "AppDelegate.h"
+#import "CouchbaseLite/CouchbaseLite.h"
+#import "CouchbaseLite/CBLDocument.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    BOOL result = [self databaseCreate];
+    NSLog (@"This Hello Couchbase Lite run %@!", (result ? @"was a total success" : @"was a dismal failure"));
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -42,5 +48,38 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+// creates a database, and then creates, stores, and retrieves a document
+- (BOOL) databaseCreate {
+    
+    // holds error error messages from unsuccessful calls
+    NSError *error;
+    
+    // create a shared instance of CBLManager
+    CBLManager *manager = [CBLManager sharedInstance];
+    if (!manager) {
+        NSLog (@"Cannot create shared instance of CBLManager");
+        return NO;
+    }
+    
+    // データベース名の作成
+    NSString *dbname = DATABASE_NAME;
+    if (![CBLManager isValidDatabaseName: dbname]) {
+        NSLog (@"Bad database name");
+        return NO;
+    }
+    
+    // データベースの作成
+    CBLDatabase *database = [manager databaseNamed: dbname error: &error];
+    if (!database) {
+        NSLog (@"Cannot create database. Error message: %@", error.localizedDescription);
+        return NO;
+    }
+    
+    return YES;
+    
+}
+
 
 @end

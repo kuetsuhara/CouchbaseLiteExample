@@ -10,4 +10,11 @@
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITableView *comments;
+
+- (IBAction)ButtonPushd:(id)sender;
+- (IBAction)syncButtonPushed:(id)sender;
+
+
 @end
