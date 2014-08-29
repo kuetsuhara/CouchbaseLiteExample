@@ -12,7 +12,8 @@
 
 /** Option flags for CBLManager initialization. */
 typedef struct CBLManagerOptions {
-    bool readOnly;      /**< No modifications to databases are allowed. */
+    bool                 readOnly;          /**< No modifications to databases are allowed. */
+    NSDataWritingOptions fileProtection;    /**< File protection/encryption options (iOS only) */
 } CBLManagerOptions;
 
 
@@ -51,6 +52,10 @@ typedef struct CBLManagerOptions {
 
 /** The root directory of this manager (as specified at initialization time.) */
 @property (readonly) NSString* directory;
+
+/** Should the databases and attachments be excluded from iCloud or Time Machine backup?
+    Defaults to NO. */
+@property BOOL excludedFromBackup;
 
 #pragma mark - DATABASES:
 
@@ -119,21 +124,18 @@ typedef struct CBLManagerOptions {
     other criteria to enable logging. */
 + (void) enableLogging: (NSString*)type;
 
+/** Redirects Couchbase Lite logging: instead of writing to the console/stderr, it will call the
+    given block. Passing a nil block restores the default behavior. */
++ (void) redirectLogging: (void (^)(NSString* type, NSString* message))callback;
+
+
 @property (readonly, nonatomic) NSMutableDictionary* customHTTPHeaders;
 
-#ifdef CBL_DEPRECATED
-- (CBLDatabase*) createDatabaseNamed: (NSString*)name
-                               error: (NSError**)outError __attribute__((deprecated("use databaseNamed:error:")));
-#endif
 @end
 
 
 /** Returns the version of Couchbase Lite */
 extern NSString* CBLVersion( void );
-
-#ifdef CBL_DEPRECATED
-static __attribute__((deprecated("renamed CBLVersion"))) inline NSString* CBLVersionString(void) {return CBLVersion();}
-#endif
 
 /** NSError domain used for HTTP status codes returned by a lot of Couchbase Lite APIs --
     for example code 404 is "not found", 403 is "forbidden", etc. */

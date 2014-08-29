@@ -1,0 +1,22 @@
+ヒント：
+
+公式ドキュメント
+http://docs.couchbase.com/couchbase-lite/cbl-ios/#developing-apps
+
+
+Create/Update/Delete
+http://docs.couchbase.com/couchbase-lite/cbl-ios/#saving-changes
+
+Read
+ドキュメントからモデルを作成する方法
+↓のDynamic Subclassing and the CBLModelFactory
+http://docs.couchbase.com/couchbase-lite/cbl-ios/#relationships-between-models
+
+
+■どうしてもわからない人向けのプロジェクト
+
+・今回のハンズオン全部解決プロジェクト
+http://goo.gl/fkcfNp
+
+・プラスアルファ
+http://goo.gl/Ya8bFK

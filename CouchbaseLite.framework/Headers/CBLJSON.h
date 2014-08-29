@@ -42,6 +42,7 @@ typedef NSUInteger CBLJSONWritingOptions;
 
 /** Encodes an NSDate as a string in ISO-8601 format. */
 + (NSString*) JSONObjectWithDate: (NSDate*)date;
++ (NSString*) JSONObjectWithDate: (NSDate*)date timeZone:(NSTimeZone *)tz;
 
 /** Parses an ISO-8601 formatted date string to an NSDate object.
     If the object is not a string, or not valid ISO-8601, it returns nil. */
@@ -62,6 +63,9 @@ typedef NSUInteger CBLJSONWritingOptions;
     If the object is not a string, or not valid Base64, it returns nil. */
 + (NSData*) dataWithBase64String: (id)jsonObject;
 
+/** Estimates the amount of memory used by the object and those it references. */
++ (size_t) estimateMemorySize: (id)object;
+
 @end
 
 
@@ -80,7 +84,7 @@ typedef void (^CBLOnMutateBlock)();
 /** Protocol for classes whose instances can encode themselves as JSON.
     Such classes can be used directly as property types in CBLModel subclasses. */
 @protocol CBLJSONEncoding <NSObject>
-- (id) initWithJSON: (id)jsonObject;
+- (instancetype) initWithJSON: (id)jsonObject;
 - (id) encodeAsJSON;
 
 @optional

@@ -8,20 +8,16 @@
 
 #import <Foundation/Foundation.h>
 @class CBLDatabase;
+@protocol CBLAuthenticator;
 
 
 /** Describes the current status of a replication. */
-typedef enum {
+typedef NS_ENUM(unsigned, CBLReplicationStatus) {
     kCBLReplicationStopped, /**< The replication is finished or hit a fatal error. */
     kCBLReplicationOffline, /**< The remote host is currently unreachable. */
     kCBLReplicationIdle,    /**< Continuous replication is caught up and waiting for more changes.*/
     kCBLReplicationActive   /**< The replication is actively transferring data. */
-} CBLReplicationStatus;
-
-
-/** A callback block for transforming revision bodies during replication.
-    See CBLReplication.propertiesTransformationBlock's documentation for details. */
-typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
+} ;
 
 
 /** A 'push' or 'pull' replication between a local and a remote database.
@@ -84,6 +80,11 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
 
 #pragma mark - AUTHENTICATION:
 
+/** An object that knows how to authenticate with a remote server.
+    CBLAuthenticator is an opaque protocol; instances can be created by calling the factory methods
+    of the class of the same name. */
+@property id<CBLAuthenticator> authenticator;
+
 /** The credential (generally username+password) to use to authenticate to the remote database.
     This can either come from the URL itself (if it's of the form "http://user:pass@example.com")
     or be stored in the NSURLCredentialStore, which is a wrapper around the Keychain. */
@@ -94,38 +95,27 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
     and optionally "signature_method". */
 @property (nonatomic, copy) NSDictionary* OAuth;
 
-/** Email address for login with Facebook credentials.
-    In addition to this, you also need to get a token from Facebook's servers,
-    which you then pass to -registerFacebookToken:forEmailAddress. */
-@property (nonatomic, copy) NSString* facebookEmailAddress;
-
-/** Registers a Facebook login token that will be used on the next login to the remote server.
-    This also sets facebookEmailAddress. 
-    For security reasons the token is not stored in the replication document, but instead kept
-    in an in-memory registry private to the Facebook authorizer. On login the token is sent to
-    the server, and the server will respond with a session cookie. After that the token isn't
-    needed again until the session expires. At that point you'll need to recover or regenerate
-    the token and register it again. */
-- (BOOL) registerFacebookToken: (NSString*)token
-               forEmailAddress: (NSString*)email                        __attribute__((nonnull));
-
 /** The base URL of the remote server, for use as the "origin" parameter when requesting Persona or
     Facebook authentication. */
 @property (readonly) NSURL* personaOrigin;
 
-/** Email address for remote login with Persona (aka BrowserID).
-    In addition to this, you also need to go through the Persona protocol to get a signed assertion,
-    which you then pass to the -registerPersonaAssertion: method.)*/
-@property (nonatomic, copy) NSString* personaEmailAddress;
+/** Adds a cookie to the shared NSHTTPCookieStorage that will be sent to the remote server. This
+    is useful if you've obtained a session cookie through some external means and need to tell the
+    replicator to send it for authentication purposes.
+    This method constructs an NSHTTPCookie from the given parameters, as well as the remote server
+    URL's host, port and path.
+    If you already have an NSHTTPCookie object for the remote server, you can simply add it to the
+    sharedHTTPCookieStorage yourself. 
+    If you have a "Set-Cookie:" response header, you can use NSHTTPCookie's class methods to parse
+    it to a cookie object, then add it to the sharedHTTPCookieStorage. */
+- (void) setCookieNamed: (NSString*)name
+              withValue: (NSString*)value
+                   path: (NSString*)path
+         expirationDate: (NSDate*)expirationDate
+                 secure: (BOOL)secure;
 
-/** Registers a Persona 'assertion' (ID verification) string that will be used on the next login to the remote server. This also sets personaEmailAddress.
-    Note: An assertion is a type of certificate and typically has a very short lifespan (like, a
-    few minutes.) For this reason it's not stored in the replication document, but instead kept
-    in an in-memory registry private to the Persona authorizer. You should initiate a replication
-    immediately after registering the assertion, so that the replicator engine can use it to
-    authenticate before it expires. After that, the replicator will have a login session cookie
-    that should last significantly longer before needing to be renewed. */
-- (BOOL) registerPersonaAssertion: (NSString*)assertion               __attribute__((nonnull));
+/** Deletes the named cookie from the shared NSHTTPCookieStorage for the remote server's URL. */
+-(void)deleteCookieNamed:(NSString *)name;
 
 /** Adds additional SSL root certificates to be trusted by the replicator, or entirely overrides the
     OS's default list of trusted root certs.
@@ -134,7 +124,6 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
     @param onlyThese  If NO, the given certs are appended to the system's built-in list of trusted
         root certs; if YES, it replaces them (so *only* the given certs will be trusted.) */
 + (void) setAnchorCerts: (NSArray*)certs onlyThese: (BOOL)onlyThese;
-
 
 #pragma mark - STATUS:
 
@@ -151,6 +140,13 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
 /** Restarts a running replication.
     Has no effect if the replication is not running. */
 - (void) restart;
+
+/** Suspends/resumes a replication.
+    On iOS a replication will suspend itself when the app goes into the background, and resume
+    when the app is re-activated. If your app receives a push notification while suspended and needs
+    to run the replication to download new data, your handler should set suspended to NO to resume
+    replication, and then set the property back to YES when it's done. */
+@property BOOL suspended;
 
 /** The replication's current state, one of {stopped, offline, idle, active}. */
 @property (nonatomic, readonly) CBLReplicationStatus status;
@@ -171,14 +167,16 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
 
 
 #ifdef CBL_DEPRECATED
-@property (nonatomic) bool create_target __attribute__((deprecated("renamed createTarget")));
-@property (nonatomic, copy) NSDictionary* query_params __attribute__((deprecated("renamed filterParams")));
-@property (copy) NSArray *doc_ids __attribute__((deprecated("renamed documentIDs")));
-@property (nonatomic, readonly) CBLReplicationStatus mode __attribute__((deprecated("renamed status")));
-@property (nonatomic, readonly, retain) NSError* error __attribute__((deprecated("renamed lastError")));
-@property (nonatomic, readonly) unsigned completed __attribute__((deprecated("renamed completedChangesCount")));
-@property (nonatomic, readonly) unsigned total __attribute__((deprecated("renamed changesCount")));
+@property (nonatomic, copy) NSString* facebookEmailAddress
+    __attribute__((deprecated("set authenticator property instead")));
+- (BOOL) registerFacebookToken: (NSString*)token forEmailAddress: (NSString*)email
+    __attribute__((deprecated("set authenticator property instead")));
+- (BOOL) registerPersonaAssertion: (NSString*)assertion
+    __attribute__((deprecated("set authenticator property instead")));
+@property (nonatomic, copy) NSString* personaEmailAddress
+    __attribute__((deprecated("set authenticator property instead")));
 #endif
+
 @end
 
 
@@ -186,8 +184,3 @@ typedef NSDictionary *(^CBLPropertiesTransformationBlock)(NSDictionary *);
     {status, running, error, completed, total}. It's often more convenient to observe this
     notification rather than observing each property individually. */
 extern NSString* const kCBLReplicationChangeNotification;
-
-
-#ifdef CBL_DEPRECATED
-typedef CBLReplicationStatus CBLReplicationMode __attribute__((deprecated("renamed CBLReplicationStatus")));
-#endif

@@ -11,6 +11,7 @@
 @class CBLAttachment, CBLDatabase, CBLDocument;
 
 
+NS_REQUIRES_PROPERTY_DEFINITIONS  // Don't let compiler auto-synthesize properties in subclasses
 /** Generic model class for CouchbaseLite documents.
     There's a 1::1 mapping between these and CBLDocuments; call +modelForDocument: to get (or create) a model object for a document, and .document to get the document of a model.
     You should subclass this and declare properties in the subclass's @@interface. As with NSManagedObject, you don't need to implement their accessor methods or declare instance variables; simply note them as '@@dynamic' in the class @@implementation. The property value will automatically be fetched from or stored to the document, using the same name.
@@ -142,7 +143,11 @@
 
 /** Designated initializer. Do not call directly except from subclass initializers; to create a new instance call +modelForDocument: instead.
     @param document  The document. Nil if this is created new (-init was called). */
-- (instancetype) initWithDocument: (CBLDocument*)document;
+- (instancetype) initWithDocument: (CBLDocument*)document
+#ifdef NS_DESIGNATED_INITIALIZER
+NS_DESIGNATED_INITIALIZER
+#endif
+;
 
 /** The document ID to use when creating a new document.
     Default is nil, which means to assign no ID (the server will assign one). */
@@ -159,6 +164,10 @@
 /** Marks the model as having unsaved content, ensuring that it will get saved after a short interval (if .autosaves is YES) or when -save or -[CBLDatabase saveAllModels] are called.
     You don't normally need to call this, since property setters call it for you. One case where you'd need to call it is if you want to manage mutable state in your own properties and not store the changes into dynamic properties until it's time to save. In that case you should also override -propertiesToSave and update the dynamic properties accordingly before chaining to the superclass method. */
 - (void) markNeedsSave;
+
+/** Called while saving a document, before building the new revision's dictionary.
+    This method can modify property values if it wants to. */
+- (void) willSave: (NSSet*)changedPropertyNames;
 
 /** If you want properties to be saved in the document when it's deleted (in addition to the required "_deleted":true) override this method to return those properties.
     This is called by -deleteDocument:. The default implementation returns {"_deleted":true}. */
@@ -178,14 +187,6 @@
     than overriding this one. */
 + (Class) itemClassForArrayProperty: (NSString*)property;
 
-#ifdef CBL_DEPRECATED
-/** Creates or updates an attachment (in memory).
-    The attachment data will be written to the database at the same time as property changes are saved.
-    @param attachment  A newly-created CBLAttachment (not yet associated with any revision)
-    @param name  The attachment name. */
-- (void) addAttachment: (CBLAttachment*)attachment
-                 named: (NSString*)name __attribute__((deprecated("use setAttachmentNamed: instead")));
-#endif
 @end
 
 

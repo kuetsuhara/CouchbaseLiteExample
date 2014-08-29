@@ -13,7 +13,8 @@
 //  either express or implied. See the License for the specific language governing permissions
 //  and limitations under the License.
 
-#define CBL_DEPRECATED
+
+#define CBL_DEPRECATED  // Enable deprecated methods.
 
 #import "CBLManager.h"
 #import "CBLDatabase.h"
@@ -26,6 +27,7 @@
 #import "CBLQuery+FullTextSearch.h"
 #import "CBLQuery+Geo.h"
 #import "CBLReplication.h"
+#import "CBLAuthenticator.h"
 #import "CBLModel.h"
 #import "CBLModelFactory.h"
 #import "CBLJSON.h"
